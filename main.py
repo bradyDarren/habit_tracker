@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 
 PIXELA_TOKEN = 'abcd1234'
 USERNAME = 'darrenb'
@@ -42,10 +43,25 @@ pixel_header = {
     'X-USER-TOKEN':PIXELA_TOKEN
 }
 
+today = datetime.now()
+
 pixel_posting_params = {
-    'date':'20250420',
-    'quantity':'127',
+    'date':today.strftime('%Y%m%d'),
+    'quantity':'250',
 }
 
-pixel = requests.post(url=PIXEL_UPDATE_URL, json=pixel_posting_params, headers=pixel_header)
-print(pixel.text)
+# pixel = requests.post(url=PIXEL_UPDATE_URL, json=pixel_posting_params, headers=pixel_header)
+# print(pixel.text)
+
+# usng the put method to update a previous post
+PIXEL_ADJUSTMENT_URL = f'{PIXELA_URL}/{USERNAME}/graphs/graph1/20250422'
+
+pixel_adjustment_params = {
+    'quantity':'125'
+}
+
+adjustment = requests.put(url=PIXEL_ADJUSTMENT_URL, json=pixel_adjustment_params, headers=pixel_header)
+print(adjustment.text)
+
+
+
